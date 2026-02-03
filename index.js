@@ -18,12 +18,18 @@ async function fetchBookData () {
         const response = await axios.get(url)
         const $ = cheerio.load(response.data)
 
-        const bookElements = $('articale')
+        const bookElements = $('article')
 
         bookElements.each(function() {
-            title = $(this).find('h3 a ').text()
+          const title = $(this).find('h3 a ').text()
+            const price = $(this).find('.price_color').text()
+            const stock = $(this).find('.availability').text().trim()
+
+            books.push({title, price, stock})
         })
-    } catch (error) {
+        console.log(books)
+    }
+     catch (error) {
         console.error('Error fetching data:', error)
     }
 }
