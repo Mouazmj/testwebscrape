@@ -11,13 +11,18 @@ app.listen(port, () => {
 
 const url = 'https://books.toscrape.com/catalogue/category/books/mystery_3/index.html'
 
+const books = []
+
 async function fetchBookData () {
     try {
         const response = await axios.get(url)
         const $ = cheerio.load(response.data)
-        const genre = $('h1').text()
 
-        console.log('Genre: ', genre)
+        const bookElements = $('articale')
+
+        bookElements.each(function() {
+            title = $(this).find('h3 a ').text()
+        })
     } catch (error) {
         console.error('Error fetching data:', error)
     }
